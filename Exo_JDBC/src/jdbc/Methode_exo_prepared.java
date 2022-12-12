@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Methode_exo_prepared {
@@ -59,7 +58,7 @@ public class Methode_exo_prepared {
 		}
 
 	}
-	
+
 	public static void Recherche_nom_prep() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Entrez nom:");
@@ -92,27 +91,20 @@ public class Methode_exo_prepared {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
-	
+
 	public static void Recherche_date_prep() {
 		Scanner input = new Scanner(System.in);
-		System.out.println("Entrez le jour en chiffre:");
-		int jour = input.nextInt();
-		System.out.println("Entrez le mois en chiffre:");
-		int mois = input.nextInt();
 		System.out.println("Entrez l'année:");
 		int annee = input.nextInt();
-		Calendar cal = Calendar.getInstance();
-		cal.set(annee, mois-1, jour);
-		Date date = cal.getTime();
 		try {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/briefexo", "postgres",
 					"Simplon59");
-			PreparedStatement myStmt = con.prepareStatement("select nom,prenom from emp where embauche = ?");
-			myStmt.setDate(1,(java.sql.Date) date);
+			PreparedStatement myStmt = con
+					.prepareStatement("select nom,prenom from emp where extract(year from embauche) = ?");
+			myStmt.setInt(1, annee);
 			ResultSet rs = myStmt.executeQuery();
 			while (rs.next()) {
 				String Nom = rs.getString("nom");
@@ -127,20 +119,20 @@ public class Methode_exo_prepared {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
-	
+
 	public static void Recherche_chaine_prep() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Entrez nom:");
 		String nom = input.next();
+		String chaine = "%" + nom + "%";
 		try {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/briefexo", "postgres",
 					"Simplon59");
-			PreparedStatement myStmt = con.prepareStatement("select nom,prenom from emp where nom like '% ? %'");
-			myStmt.setString(1, nom);
+			PreparedStatement myStmt = con.prepareStatement("select nom,prenom from emp where nom like ?");
+			myStmt.setString(1, chaine);
 			ResultSet rs = myStmt.executeQuery();
 			while (rs.next()) {
 				String Nom = rs.getString("nom");
@@ -155,7 +147,6 @@ public class Methode_exo_prepared {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -169,7 +160,8 @@ public class Methode_exo_prepared {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/briefexo", "postgres",
 					"Simplon59");
-			PreparedStatement myStmt = con.prepareStatement("select nom,emploi,sal,emp.noserv from emp inner join serv on emp.noserv = serv.noserv where service = ? and sal > ?");
+			PreparedStatement myStmt = con.prepareStatement(
+					"select nom,emploi,sal,emp.noserv from emp inner join serv on emp.noserv = serv.noserv where service = ? and sal > ?");
 			myStmt.setString(1, service);
 			myStmt.setInt(2, salaire);
 			ResultSet rs = myStmt.executeQuery();
@@ -189,7 +181,6 @@ public class Methode_exo_prepared {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -211,9 +202,7 @@ public class Methode_exo_prepared {
 		int mois = input.nextInt();
 		System.out.println("Entrez l'année d'embauche:");
 		int annee = input.nextInt();
-		Calendar cal = Calendar.getInstance();
-		cal.set(annee, mois-1, jour);
-		Date date = cal.getTime();
+		LocalDate date = LocalDate.of(annee, mois, jour);
 		System.out.println("Entrez le salaire");
 		int salaire = input.nextInt();
 		System.out.println("Entrez la commission");
@@ -224,16 +213,18 @@ public class Methode_exo_prepared {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/briefexo", "postgres",
 					"Simplon59");
-			PreparedStatement myStmt = con.prepareStatement("insert into emp (noemp,nom,prenom,emploi,sup,embauche,sal,comm,noserv) values (?,?,?,?,?,?,?,?,?)");
+			PreparedStatement myStmt = con.prepareStatement(
+					"insert into emp (noemp,nom,prenom,emploi,sup,embauche,sal,comm,noserv) values (?,?,?,?,?,?,?,?,?)");
 			myStmt.setInt(1, noemp);
 			myStmt.setString(2, nom);
 			myStmt.setString(3, prenom);
 			myStmt.setString(4, emploi);
 			myStmt.setInt(5, sup);
-			myStmt.setDate(6, (java.sql.Date) date);
+			myStmt.setDate(6, java.sql.Date.valueOf(date));
 			myStmt.setInt(7, salaire);
 			myStmt.setInt(8, comm);
-			myStmt.setInt(3, noserv);
+			myStmt.setInt(9, noserv);
+			myStmt.executeUpdate();
 			myStmt.close();
 			con.close();
 		} catch (ClassNotFoundException e) {
@@ -241,11 +232,9 @@ public class Methode_exo_prepared {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		input.close();
-
 	}
 
-	public static void Modifier_emp() {
+	public static void Modifier_emp_prep() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Entrez le nom:");
 		String nom = input.next();
@@ -255,9 +244,10 @@ public class Methode_exo_prepared {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/briefexo", "postgres",
 					"Simplon59");
-			Statement st = con.createStatement();
-			ResultSet rs = st
-					.executeQuery("select nom,prenom from emp where nom = '" + nom + "' and prenom = '" + prenom + "'");
+			PreparedStatement myStmt = con.prepareStatement("select nom,prenom from emp where nom = ? and prenom = ?");
+			myStmt.setString(1, nom);
+			myStmt.setString(2, prenom);
+			ResultSet rs = myStmt.executeQuery();
 			if (rs.isBeforeFirst()) {
 				System.out.println("Entrez le nouveau numéro d'employé");
 				int noemp = input.nextInt();
@@ -275,32 +265,42 @@ public class Methode_exo_prepared {
 				int mois = input.nextInt();
 				System.out.println("Entrez la nouvelle année d'embauche:");
 				int annee = input.nextInt();
+				LocalDate date = LocalDate.of(annee, mois, jour);
 				System.out.println("Entrez le nouveau salaire");
 				int salaire = input.nextInt();
 				System.out.println("Entrez la nouvelle commission");
 				int comm = input.nextInt();
 				System.out.println("Entrez le nouveau numéro de service");
 				int noserv = input.nextInt();
-				st.executeUpdate("update emp set noemp = " + noemp + ", nom = '" + Nnom + "', prenom = '" + Nprenom
-						+ "', emploi = '" + emploi + "', sup = " + sup + ", embauche = '" + annee + "-" + mois + "-"
-						+ jour + "', sal = " + salaire + ", comm = " + comm + ", noserv = " + noserv + " where nom = '"
-						+ nom + "' and prenom = '" + prenom + "'");
+				myStmt = con.prepareStatement(
+						"update emp set noemp = ?, nom = ?, prenom = ?, emploi = ?, sup = ?, embauche = ?, sal = ?, comm = ?, noserv = ? where nom = ? and prenom = ?");
+				myStmt.setInt(1, noemp);
+				myStmt.setString(2, Nnom);
+				myStmt.setString(3, Nprenom);
+				myStmt.setString(4, emploi);
+				myStmt.setInt(5, sup);
+				myStmt.setDate(6, java.sql.Date.valueOf(date));
+				myStmt.setInt(7, salaire);
+				myStmt.setInt(8, comm);
+				myStmt.setInt(9, noserv);
+				myStmt.setString(10, nom);
+				myStmt.setString(11, prenom);
+				myStmt.executeUpdate();
 				System.out.println("Employé modifié");
 			} else {
 				System.out.println("Cet employé n'existe pas");
 			}
 			rs.close();
-			st.close();
+			myStmt.close();
 			con.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		input.close();
 	}
 
-	public static void Suppr_emp() {
+	public static void Suppr_emp_prep() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Entrez le nom:");
 		String nom = input.next();
@@ -310,24 +310,27 @@ public class Methode_exo_prepared {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/briefexo", "postgres",
 					"Simplon59");
-			Statement st = con.createStatement();
-			ResultSet rs = st
-					.executeQuery("select nom,prenom from emp where nom = '" + nom + "' and prenom = '" + prenom + "'");
+			PreparedStatement myStmt = con.prepareStatement("select nom,prenom from emp where nom = ? and prenom = ?");
+			myStmt.setString(1, nom);
+			myStmt.setString(2, prenom);
+			ResultSet rs = myStmt.executeQuery();
 			if (rs.isBeforeFirst()) {
-				st.executeUpdate("delete from emp where nom = '" + nom + "' and prenom = '" + prenom + "'");
+				myStmt = con.prepareStatement("delete from emp where nom = ? and prenom = ?");
+				myStmt.setString(1, nom);
+				myStmt.setString(2, prenom);
+				myStmt.executeUpdate();
 				System.out.println("Employé supprimé");
 			} else {
 				System.out.println("Cet employé n'existe pas");
 			}
 			rs.close();
-			st.close();
+			myStmt.close();
 			con.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		input.close();
 	}
 
 }

@@ -109,7 +109,6 @@ public class methode_exo {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -141,7 +140,6 @@ public class methode_exo {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -168,7 +166,6 @@ public class methode_exo {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -202,7 +199,6 @@ public class methode_exo {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -245,7 +241,6 @@ public class methode_exo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		input.close();
 
 	}
 
@@ -301,7 +296,6 @@ public class methode_exo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		input.close();
 	}
 
 	public static void Suppr_emp() {
@@ -331,7 +325,6 @@ public class methode_exo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		input.close();
 	}
 
 }

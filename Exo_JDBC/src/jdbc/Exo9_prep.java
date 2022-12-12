@@ -2,7 +2,7 @@ package jdbc;
 
 import java.util.Scanner;
 
-public class Exo9 {
+public class Exo9_prep {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Séléctionner un des choix suivants");
@@ -18,22 +18,22 @@ public class Exo9 {
 			methode_exo.Affiche_list();
 			main(null);
 		case 2:
-			methode_exo.Recherche_nom();
+			Methode_exo_prepared.Recherche_nom_prep();
 			main(null);
 		case 3:
-			methode_exo.Ajout_emp();
+			Methode_exo_prepared.Ajout_emp_prep();
 			main(null);
 		case 4:
-			methode_exo.Modifier_emp();
+			Methode_exo_prepared.Modifier_emp_prep();
 			main(null);
 		case 5:
-			methode_exo.Suppr_emp();
+			Methode_exo_prepared.Suppr_emp_prep();
 			main(null);
 		case 6:
 			System.exit(0);
 			break;
 		}
 		input.close();
-	}
 
+	}
 }
