@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class methode_exo {
+	/**
+	 * Méthode affichant la liste des employés
+	 */
 	public static void Affiche_list() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -31,6 +34,9 @@ public class methode_exo {
 
 	}
 
+	/**
+	 * Méthode cherchant les employés correspondant au service 5
+	 */
 	public static void Emp_serv5() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -53,6 +59,10 @@ public class methode_exo {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant au service informatique
+	 */
 
 	public static void Emp_servInfo() {
 		try {
@@ -77,6 +87,10 @@ public class methode_exo {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant au nom
+	 */
 
 	public static void Recherche_nom() {
 		Scanner input = new Scanner(System.in);
@@ -111,6 +125,10 @@ public class methode_exo {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant a la date d'embauche
+	 */
 
 	public static void Recherche_date() {
 		Scanner input = new Scanner(System.in);
@@ -143,6 +161,9 @@ public class methode_exo {
 
 	}
 
+	/**
+	 * Méthode cherchant les employés correspondant a un chaine de caractère
+	 */
 	public static void Recherche_chaine() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Entrez nom:");
@@ -168,6 +189,10 @@ public class methode_exo {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant au service et au salaire
+	 */
 
 	public static void Recherche_servsal() {
 		Scanner input = new Scanner(System.in);
@@ -201,6 +226,10 @@ public class methode_exo {
 		}
 
 	}
+	
+	/**
+	 * Méthode permettant de créer des employés
+	 */
 
 	public static void Ajout_emp() {
 		Scanner input = new Scanner(System.in);
@@ -243,6 +272,10 @@ public class methode_exo {
 		}
 
 	}
+	
+	/**
+	 * Méthode permettant de modifier un employé correspondant au nom et prénom
+	 */
 
 	public static void Modifier_emp() {
 		Scanner input = new Scanner(System.in);
@@ -297,6 +330,10 @@ public class methode_exo {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Méthode supprimant les employés correspondant au nom et prénom
+	 */
 
 	public static void Suppr_emp() {
 		Scanner input = new Scanner(System.in);

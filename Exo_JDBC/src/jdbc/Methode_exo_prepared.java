@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Methode_exo_prepared {
+	
+	/**
+	 * Méthode cherchant les employés correspondant au service 5
+	 */
 	public static void Emp_serv5_prep() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -33,6 +37,11 @@ public class Methode_exo_prepared {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant au service informatique
+	 */
+
 
 	public static void Emp_servInfo_prep() {
 		try {
@@ -58,6 +67,10 @@ public class Methode_exo_prepared {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant au nom
+	 */
 
 	public static void Recherche_nom_prep() {
 		Scanner input = new Scanner(System.in);
@@ -93,6 +106,10 @@ public class Methode_exo_prepared {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant a la date d'embauche
+	 */
 
 	public static void Recherche_date_prep() {
 		Scanner input = new Scanner(System.in);
@@ -121,6 +138,10 @@ public class Methode_exo_prepared {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant a un chaine de caractère
+	 */
 
 	public static void Recherche_chaine_prep() {
 		Scanner input = new Scanner(System.in);
@@ -149,6 +170,10 @@ public class Methode_exo_prepared {
 		}
 
 	}
+	
+	/**
+	 * Méthode cherchant les employés correspondant au service et au salaire
+	 */
 
 	public static void Recherche_servsal_prep() {
 		Scanner input = new Scanner(System.in);
@@ -183,6 +208,11 @@ public class Methode_exo_prepared {
 		}
 
 	}
+	
+	/**
+	 * Méthode permettant de créer des employés
+	 */
+
 
 	public static void Ajout_emp_prep() {
 		Scanner input = new Scanner(System.in);
@@ -233,6 +263,10 @@ public class Methode_exo_prepared {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Méthode permettant de modifier un employé correspondant au nom et prénom
+	 */
 
 	public static void Modifier_emp_prep() {
 		Scanner input = new Scanner(System.in);
@@ -299,6 +333,10 @@ public class Methode_exo_prepared {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Méthode supprimant les employés correspondant au nom et prénom
+	 */
 
 	public static void Suppr_emp_prep() {
 		Scanner input = new Scanner(System.in);
